@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { doCreditPayment } from "../redux/store";
+import {
+  doCreditPayment,
+  PAYMENT_STATE_CLEAR_ACTION_TYPE,
+} from "../redux/store";
 //import { Payments } from "./Pages/Payments";
 
 export const Payments = () => {
@@ -11,7 +14,6 @@ export const Payments = () => {
   const [cvv, setCvv] = useState(null);
   const [Cardholdername, setName] = useState(null);
   const state = useSelector((state) => state);
-  const amount = 340;
   const id = 1;
   const dispatch = useDispatch();
 
@@ -39,6 +41,12 @@ export const Payments = () => {
     // console.log(cardNum, expirationMonth, expirationYear, cvv, amount);
   };
 
+  useEffect(() => {
+    return () => {
+      dispatch({ type: PAYMENT_STATE_CLEAR_ACTION_TYPE });
+    };
+  }, []);
+
   if (!state.bill) {
     return (
       <div>
@@ -49,12 +57,17 @@ export const Payments = () => {
   return (
     <div className="container">
       <h2 className="mb-3 p-3 text-center bg-dark text-light">Payments</h2>
+      {state?.payment?.status && (
+        <div class={"payment-" + state.payment.status}>
+          Your payment {state.payment.status}
+        </div>
+      )}
       <div id="accordion">
         <div className="card">
           <div className="card-header" id="headingOne">
             <h5 className="mb-2">
               <button
-                className="btn btn-link "
+                class="btn btn-link"
                 data-toggle="collapse"
                 data-target="#collapseOne"
                 aria-expanded="true"
@@ -66,14 +79,14 @@ export const Payments = () => {
           </div>
           <div
             id="collapseOne"
-            className="collapse show p-3"
+            class="collapse show"
             aria-labelledby="headingOne"
             data-parent="#accordion"
           >
             <div className="form-group">
               <label className="d-block">Card Number</label>
               <input
-                type="text"
+                type="number"
                 name="cardNumber"
                 id="cardNumber"
                 onChange={(e) => setName(e.target.value)}
@@ -99,7 +112,7 @@ export const Payments = () => {
                 </div>
                 <div className="col">
                   <input
-                    type="text"
+                    type="number"
                     name="expiratonYear"
                     id="expiratonYear"
                     onChange={(e) => setExpirationYear(e.target.value)}
@@ -111,7 +124,10 @@ export const Payments = () => {
             <div className="form-group">
               <label className="d-block">CVV</label>
               <input
-                type="text"
+                type="password"
+                minLength={3}
+                maxLength={3}
+                required
                 name="cvv"
                 id="cvv"
                 onChange={(e) => setCvv(e.target.value)}
@@ -207,7 +223,7 @@ export const Payments = () => {
             </div>
             <div className="form-group">
               <label className="d-block">Amount</label>
-              <input type="text" disabled value={amount} />
+              <input type="text" disabled value={state.bill.billAmount} />
             </div>
             <div className="btn btn-success" onClick={handleDebitPayment}>
               Pay
@@ -241,10 +257,15 @@ export const Payments = () => {
                 name="flexRadioDefault"
                 id="flexRadioDefault1"
               />
-              <label class="form-check-label mx-4" for="flexRadioDefault1">
+              <label
+                class="form-check-label mx-4 d-block mb-2"
+                for="flexRadioDefault1"
+              >
                 Paytm
               </label>
-              {/* <div className="btn btn-success " onClick={handleDebitPayment}>Pay</div> */}
+              <div className="btn btn-success " onClick={handleDebitPayment}>
+                Pay
+              </div>
             </div>
           </div>
         </div>

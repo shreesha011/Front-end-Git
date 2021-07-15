@@ -196,8 +196,10 @@ export const ViewBill = () => {
         <label>Bill Amount:</label>
         <label>{state.bill.billAmount} INR</label>
       </div>
+
       <div>
         <button
+          class="center"
           className="btn btn-lg btn-secondary w-100"
           onClick={handleSubmit}
         >
