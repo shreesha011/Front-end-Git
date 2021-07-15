@@ -25,6 +25,7 @@ export const Readingupsert = () => {
           unitsConsumed,
         })
       );
+      history.push("/bill-upsert");
     } else {
       e.stopPropagation();
       // formEl.current.classList.add("was-validated");
@@ -34,7 +35,6 @@ export const Readingupsert = () => {
     setConnectionId("");
     setReadingDate("");
     setUnitsConsumed("");
-    history.push("/bill-upsert");
   }
 
   const [connectionId, setConnectionId] = useState("");
@@ -80,12 +80,12 @@ export const Readingupsert = () => {
       <form ref={formEl} className="mx-4 needs-validation" noValidate>
         <div>
           <input
-            type="text"
+            type="number"
             value={connectionId}
             onChange={updateConnectionId}
             className="form-control form-control-lg mb-1"
             placeholder="ConnectionId"
-            minLength="3"
+            minLength="1"
             maxLength="30"
             required
           />
@@ -104,12 +104,12 @@ export const Readingupsert = () => {
 
         <div>
           <input
-            type="text"
+            type="number"
             value={unitsConsumed}
             onChange={updateUnitsConsumed}
             className="form-control form-control-lg mb-1"
             placeholder="Units Consumed"
-            minLength="3"
+            minLength="1"
             maxLength="30"
             required
           />
