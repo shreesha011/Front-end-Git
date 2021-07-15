@@ -17,11 +17,11 @@ function App() {
         </Link>
 
         <Link to="/reading-upsert">
-          <h6 className="mr-3">READING-UPSERT</h6>
+          <h6 className="mr-3">READING-PAGE</h6>
         </Link>
 
         <Link to="/bill-upsert">
-          <h6 className="mr-3">BILL-UPSERT</h6>
+          <h6 className="mr-3">BILL-PAGE</h6>
         </Link>
 
         {/* <Link to="/reading-list">

@@ -7,6 +7,8 @@ import {
 } from "../redux/store";
 //import { Payments } from "./Pages/Payments";
 
+import Barcode from "../Assert/Barcode.jpeg";
+
 export const Payments = () => {
   const [cardNum, setCardNum] = useState(null);
   const [expirationMonth, setExpirationMonth] = useState(null);
@@ -41,6 +43,11 @@ export const Payments = () => {
     // console.log(cardNum, expirationMonth, expirationYear, cvv, amount);
   };
 
+  // onsubmit = () => {
+  //   console.log;
+  //   // <img className="barcode" src={Barcode} alt="Paytm" />
+  // };
+
   useEffect(() => {
     return () => {
       dispatch({ type: PAYMENT_STATE_CLEAR_ACTION_TYPE });
@@ -49,8 +56,10 @@ export const Payments = () => {
 
   if (!state.bill) {
     return (
-      <div>
-        <h2>No bill found for payment</h2>
+      <div class="container">
+        <div class="vertical-center">
+          <h2>NO BILL FOUND FOR PAYMENT</h2>
+        </div>
       </div>
     );
   }
@@ -73,7 +82,7 @@ export const Payments = () => {
                 aria-expanded="true"
                 aria-controls="collapseOne"
               >
-                Credit Card
+                CREDIT CARD
               </button>
             </h5>
           </div>
@@ -84,7 +93,7 @@ export const Payments = () => {
             data-parent="#accordion"
           >
             <div className="form-group">
-              <label className="d-block">Card Number</label>
+              <label className="d-block">CARD NUMBER</label>
               <input
                 type="number"
                 name="cardNumber"
@@ -93,11 +102,11 @@ export const Payments = () => {
               />
             </div>
             <div className="form-group">
-              <label className="d-block">Expiration Date</label>
+              <label className="d-block">EXPIRATION DATE</label>
               <div className="row">
                 <div className="col">
                   <input
-                    type="text"
+                    type="date"
                     name="expiratonMonth"
                     id="expiratonMonth"
                     onChange={(e) => setExpirationMonth(e.target.value)}
@@ -112,7 +121,7 @@ export const Payments = () => {
                 </div>
                 <div className="col">
                   <input
-                    type="number"
+                    type="date"
                     name="expiratonYear"
                     id="expiratonYear"
                     onChange={(e) => setExpirationYear(e.target.value)}
@@ -134,7 +143,7 @@ export const Payments = () => {
               />
             </div>
             <div className="form-group">
-              <label className="d-block">Card Holder Name</label>
+              <label className="d-block">CARD NAME</label>
               <input
                 type="text"
                 name="cardNumber"
@@ -143,11 +152,11 @@ export const Payments = () => {
               />
             </div>
             <div className="form-group">
-              <label className="d-block">Amount</label>
+              <label className="d-block">AMOUNT</label>
               <input type="text" disabled value={state.bill.billAmount} />
             </div>
-            <div className="btn btn-primary" onClick={handleCreditPayment}>
-              Pay
+            <div className="btn btn-success" onClick={handleCreditPayment}>
+              PAY
             </div>
           </div>
         </div>
@@ -161,7 +170,7 @@ export const Payments = () => {
                 aria-expanded="false"
                 aria-controls="collapseTwo"
               >
-                Debit Card
+                DEBIT CARD
               </button>
             </h5>
           </div>
@@ -172,7 +181,7 @@ export const Payments = () => {
             data-parent="#accordion"
           >
             <div className="form-group">
-              <label className="d-block">Card Number</label>
+              <label className="d-block">CARD NUMBER</label>
               <input
                 type="text"
                 name="cardNumber"
@@ -181,11 +190,11 @@ export const Payments = () => {
               />
             </div>
             <div className="form-group">
-              <label className="d-block">Expiration Date</label>
+              <label className="d-block">EXPIRATION DATE</label>
               <div className="row">
                 <div className="col">
                   <input
-                    type="text"
+                    type="date"
                     name="expiratonMonth"
                     id="expiratonMonth"
                     onChange={(e) => setExpirationMonth(e.target.value)}
@@ -193,12 +202,13 @@ export const Payments = () => {
                   />
                 </div>
                 <div className="col">
+                  <label className="d-block"> YEAR</label>
                   <input
-                    type="text"
+                    type="date"
                     name="expiratonYear"
                     id="expiratonYear"
                     onChange={(e) => setExpirationYear(e.target.value)}
-                    placeholder="Year"
+                    placeholder=" Expiration Year"
                   />
                 </div>
               </div>
@@ -206,16 +216,22 @@ export const Payments = () => {
             <div className="form-group">
               <label className="d-block">CVV</label>
               <input
-                type="text"
+                type="password"
+                minLength={3}
+                maxLength={3}
+                required
                 name="cvv"
                 id="cvv"
                 onChange={(e) => setCvv(e.target.value)}
               />
             </div>
             <div className="form-group">
-              <label className="d-block">Card Holder Name</label>
+              <label className="d-block">CARD NAME</label>
               <input
                 type="text"
+                minLength={5}
+                maxLength={20}
+                required
                 name="cardNumber"
                 id="cardNumber"
                 onChange={(e) => setCardNum(e.target.value)}
@@ -226,7 +242,7 @@ export const Payments = () => {
               <input type="text" disabled value={state.bill.billAmount} />
             </div>
             <div className="btn btn-success" onClick={handleDebitPayment}>
-              Pay
+              PAY
             </div>
           </div>
         </div>
@@ -240,7 +256,7 @@ export const Payments = () => {
                 aria-expanded="false"
                 aria-controls="collapseThree"
               >
-                Wallet
+                WALLET
               </button>
             </h5>
           </div>
@@ -262,7 +278,11 @@ export const Payments = () => {
                 for="flexRadioDefault1"
               >
                 Paytm
+                <div>
+                  <img className="barcode" src={Barcode} alt="Paytm" />
+                </div>
               </label>
+
               <div className="btn btn-success " onClick={handleDebitPayment}>
                 Pay
               </div>

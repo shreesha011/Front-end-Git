@@ -34,6 +34,11 @@
 .payment-failed {
   background: red;
 }
+
+.barcode {
+  width: 433px;
+  height: 533px;
+}
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
